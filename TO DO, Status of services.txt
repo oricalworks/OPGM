@@ -1,0 +1,5 @@
+add fingerprint
+disable/workaround openpilot radar dependency or find alternative
+Auto lane change
+get controlsd to launch
+ECT...
