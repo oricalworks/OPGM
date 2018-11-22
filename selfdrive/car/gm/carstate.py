@@ -35,7 +35,7 @@ def get_powertrain_can_parser(CP, canbus):
     signals += [
       ("RegenPaddle", "EBCMRegenPaddle", 0),
     ]
-  if CP.carFingerprint in (CAR.VOLT, CAR.MALIBU, CAR.HOLDEN_ASTRA):
+  if CP.carFingerprint in (CAR.VOLT, CAR.MALIBU, CAR.HOLDEN_ASTRA, CAR.EQUINOX):
     signals += [
       ("TractionControlOn", "ESPStatus", 0),
       ("EPBClosed", "EPBStatus", 0),
@@ -71,7 +71,12 @@ class CarState(object):
   def update(self, pt_cp):
 
     self.can_valid = pt_cp.can_valid
-    self.prev_cruise_buttons = self.cruise_buttons
+    self.prev_cruise_buttons = self.cruise_buttons\
+	
+	#Engage openpilot Equinox?
+	if car_fingerprint == (CAR.EQUINOX): # NO ACC, using ASCM Button
+	self.cruise_buttons = pt_cp.vl["ASCMSteeringButton"]['ASCMSteeringButton'] 
+	else 
     self.cruise_buttons = pt_cp.vl["ASCMSteeringButton"]['ACCButtons']
 
     self.v_wheel_fl = pt_cp.vl["EBCMWheelSpdFront"]['FLWheelSpd'] * CV.KPH_TO_MS
@@ -120,7 +125,7 @@ class CarState(object):
     self.left_blinker_on = pt_cp.vl["BCMTurnSignals"]['TurnSignals'] == 1
     self.right_blinker_on = pt_cp.vl["BCMTurnSignals"]['TurnSignals'] == 2
 
-    if self.car_fingerprint in (CAR.VOLT, CAR.MALIBU, CAR.HOLDEN_ASTRA):
+    if self.car_fingerprint in (CAR.VOLT, CAR.MALIBU, CAR.HOLDEN_ASTRA, CAR.EQUINOX):
       self.park_brake = pt_cp.vl["EPBStatus"]['EPBClosed']
       self.main_on = pt_cp.vl["ECMEngineStatus"]['CruiseMainOn']
       self.acc_active = False

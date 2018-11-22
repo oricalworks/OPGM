@@ -10,7 +10,7 @@ from selfdrive.can.packer import CANPacker
 
 class CarControllerParams():
   def __init__(self, car_fingerprint):
-    if car_fingerprint in (CAR.VOLT, CAR.MALIBU, CAR.HOLDEN_ASTRA):
+    if car_fingerprint in (CAR.VOLT, CAR.MALIBU, CAR.HOLDEN_ASTRA, CAR.EQUINOX):
       self.STEER_MAX = 300
       self.STEER_STEP = 2              # how often we update the steer cmd
       self.STEER_DELTA_UP = 7          # ~0.75s time to peak torque (255/50hz/0.75s)
@@ -28,7 +28,12 @@ class CarControllerParams():
 
     # Takes case of "Service Adaptive Cruise" and "Service Front Camera"
     # dashboard messages.
-    self.ADAS_KEEPALIVE_STEP = 100
+	# Special equinox setup
+    if car_fingerprint != (CAR.EQUINOX):
+	self.ADAS_KEEPALIVE_STEP = 100
+    self.CAMERA_KEEPALIVE_STEP = 100
+	elif car_fingerprint == (CAR.EQUINOX):
+	#self.ADAS_KEEPALIVE_STEP = 100
     self.CAMERA_KEEPALIVE_STEP = 100
 
     # pedal lookups, only for Volt
