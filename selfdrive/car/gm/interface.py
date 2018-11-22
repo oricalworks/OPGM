@@ -108,7 +108,6 @@ class CarInterface(object):
       ret.steerRatioRear = 0. # TODO: there is RAS on this car!
       ret.centerToFront = ret.wheelbase * 0.465
 	  
-
 	elif canidate == CAR.EQUINOX: #Testing
       ret.minEnableSpeed = 24 * CV.MPH_TO_MS
       ret.mass = 3274 + std_cargo
