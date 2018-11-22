@@ -83,7 +83,7 @@ from selfdrive.loggerd.config import ROOT
 
 # comment out anything you don't want to run
 if car_fingerprint != (CAR.EQUINOX):
-managed_processes = {
+  managed_processes = {
   "thermald": "selfdrive.thermald",
   "uploader": "selfdrive.loggerd.uploader",
   "controlsd": "selfdrive.controls.controlsd",
@@ -105,7 +105,7 @@ managed_processes = {
   "updated": "selfdrive.updated",
 }
 if car_fingerprint == (CAR.EQUINOX):
-managed_processes = {
+  managed_processes = {
   "thermald": "selfdrive.thermald",
   "uploader": "selfdrive.loggerd.uploader",
   "controlsd": "selfdrive.controls.controlsd",
