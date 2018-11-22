@@ -71,7 +71,7 @@ class CarState(object):
   def update(self, pt_cp):
 
     self.can_valid = pt_cp.can_valid
-    self.prev_cruise_buttons = self.cruise_buttons\
+    self.prev_cruise_buttons = self.cruise_buttons
 	
 	#Engage openpilot Equinox?
 	if car_fingerprint == (CAR.EQUINOX): # NO ACC, using ASCM Button

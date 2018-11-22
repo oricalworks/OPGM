@@ -107,13 +107,24 @@ def data_sample(CI, CC, thermal, calibration, health, driver_monitor, gps_locati
     mismatch_counter = 0
 
   # *** health checking logic ***
-  if hh is not None:
+  if car_fingerprint == (CAR.EQUINOX):
+  if hh >= 0:  # Health Logic check disabled on Equinox currently
     controls_allowed = hh.health.controlsAllowed
     if not controls_allowed and enabled:
       mismatch_counter += 1
 
     if mismatch_counter >= 2:
       events.append(create_event('controlsMismatch', [ET.IMMEDIATE_DISABLE]))
+
+  if car_fingerprint == (CAR.EQUINOX):
+  if hh is not None  #Stock Health Logic check
+    controls_allowed = hh.health.controlsAllowed
+    if not controls_allowed and enabled:
+      mismatch_counter += 1
+
+    if mismatch_counter >= 2:
+      events.append(create_event('controlsMismatch', [ET.IMMEDIATE_DISABLE]))
+
 
   if dm is not None:
     driver_status.get_pose(dm.driverMonitoring, params)
@@ -322,7 +333,7 @@ def data_send(perception_state, plan, plan_ts, CS, CI, CP, VM, state, events, ac
 
     CC.actuators = actuators
 
-    CC.cruiseControl.override = True
+    CC.cruiseControl.override = True  #???????
     # always cancel if we have an interceptor
     CC.cruiseControl.cancel = not CP.enableCruise or (not isEnabled(state) and CS.cruiseState.enabled)
 

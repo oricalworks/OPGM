@@ -107,6 +107,16 @@ class CarInterface(object):
       ret.steerRatio = 14.6   # it's 16.3 without rear active steering
       ret.steerRatioRear = 0. # TODO: there is RAS on this car!
       ret.centerToFront = ret.wheelbase * 0.465
+	  
+
+	elif canidate == CAR.EQUINOX: #Testing
+      ret.minEnableSpeed = 24 * CV.MPH_TO_MS
+      ret.mass = 3274 + std_cargo
+      ret.safetyModel = car.CarParams.SafetyModels.gm
+      ret.wheelbase = 2.83  # Units? 107.30in wheelbase
+      ret.steerRatio = 15.8
+      ret.steerRatioRear = 0.
+      ret.centerToFront = ret.wheelbase * 0.4 # wild guess
 
 
     # hardcoding honda civic 2016 touring params so they can be used to
@@ -135,7 +145,38 @@ class CarInterface(object):
                             (ret.centerToFront / ret.wheelbase) / (centerToFront_civic / wheelbase_civic)
 
 
-    # same tuning for Volt and CT6 for now
+    
+	if canidate == CAR.EQUINOX: #Hopefully won't lose any clock cicles 
+	ret.steerKiBP, ret.steerKpBP = [[0.], [0.]]
+    ret.steerKpV, ret.steerKiV = [[0.2], [0.00]]
+    ret.steerKf = 0.00007   # full torque for 20 deg at 80mph means 0.00007818594 / Increased from 0.00007 - JR
+
+    ret.steerMaxBP = [0.] # m/s
+    ret.steerMaxV = [1.]
+    ret.gasMaxBP = [0.]
+    ret.gasMaxV = [.5]
+    ret.brakeMaxBP = [0.]
+    ret.brakeMaxV = [1.]
+    ret.longPidDeadzoneBP = [0.]
+    ret.longPidDeadzoneV = [0.]
+
+    ret.longitudinalKpBP = [5., 35.]
+    ret.longitudinalKpV = [2.4, 1.5]
+    ret.longitudinalKiBP = [0.]
+    ret.longitudinalKiV = [0.36]
+
+    ret.steerLimitAlert = True
+
+    ret.stoppingControl = False # Set to false (IDK) -JR
+    ret.startAccel = 0.0 #Used to be 0.8
+
+    ret.steerActuatorDelay = 0.1  # Default delay, not measured yet
+    ret.steerRateCost = 1.0
+    ret.steerControlType = car.CarParams.SteerControlType.torque
+
+    return ret
+	# same tuning for Volt and CT6 for now
+	elif
     ret.steerKiBP, ret.steerKpBP = [[0.], [0.]]
     ret.steerKpV, ret.steerKiV = [[0.2], [0.00]]
     ret.steerKf = 0.00004   # full torque for 20 deg at 80mph means 0.00007818594
@@ -266,7 +307,7 @@ class CarInterface(object):
     if ret.seatbeltUnlatched:
       events.append(create_event('seatbeltNotLatched', [ET.NO_ENTRY, ET.SOFT_DISABLE]))
 
-    if self.CS.car_fingerprint in (CAR.VOLT, CAR.MALIBU, CAR.HOLDEN_ASTRA):
+    if self.CS.car_fingerprint in (CAR.VOLT, CAR.MALIBU, CAR.HOLDEN_ASTRA, CAR.EQUINOX): # Added Equinox
       if self.CS.brake_error:
         events.append(create_event('brakeUnavailable', [ET.NO_ENTRY, ET.IMMEDIATE_DISABLE, ET.PERMANENT]))
       if not self.CS.gear_shifter_valid:

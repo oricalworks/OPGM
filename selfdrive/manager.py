@@ -82,11 +82,12 @@ import selfdrive.crash as crash
 from selfdrive.loggerd.config import ROOT
 
 # comment out anything you don't want to run
+if car_fingerprint != (CAR.EQUINOX):
 managed_processes = {
   "thermald": "selfdrive.thermald",
   "uploader": "selfdrive.loggerd.uploader",
   "controlsd": "selfdrive.controls.controlsd",
- #"radard": "selfdrive.controls.radard",
+  "radard": "selfdrive.controls.radard",
   "ubloxd": "selfdrive.locationd.ubloxd",
   "loggerd": ("selfdrive/loggerd", ["./loggerd"]),
   "logmessaged": "selfdrive.logmessaged",
@@ -101,7 +102,29 @@ managed_processes = {
   "sensord": ("selfdrive/sensord", ["./sensord"]),
   "gpsd": ("selfdrive/sensord", ["./gpsd"]),
   "orbd": ("selfdrive/orbd", ["./orbd_wrapper.sh"]),
-  #"updated": "selfdrive.updated",
+  "updated": "selfdrive.updated",
+}
+if car_fingerprint == (CAR.EQUINOX):
+managed_processes = {
+  "thermald": "selfdrive.thermald",
+  "uploader": "selfdrive.loggerd.uploader",
+  "controlsd": "selfdrive.controls.controlsd",
+  #"radard": "selfdrive.controls.radard",
+  "ubloxd": "selfdrive.locationd.ubloxd",
+  "loggerd": ("selfdrive/loggerd", ["./loggerd"]),
+  "logmessaged": "selfdrive.logmessaged",
+  "tombstoned": "selfdrive.tombstoned",
+  "logcatd": ("selfdrive/logcatd", ["./logcatd"]),
+  "proclogd": ("selfdrive/proclogd", ["./proclogd"]),
+  "boardd": ("selfdrive/boardd", ["./boardd"]),   # not used directly
+  "pandad": "selfdrive.pandad",
+  "ui": ("selfdrive/ui", ["./ui"]),
+  "calibrationd": "selfdrive.locationd.calibrationd",
+  "visiond": ("selfdrive/visiond", ["./visiond"]),
+  "sensord": ("selfdrive/sensord", ["./sensord"]),
+  "gpsd": ("selfdrive/sensord", ["./gpsd"]),
+  "orbd": ("selfdrive/orbd", ["./orbd_wrapper.sh"]),
+  "updated": "selfdrive.updated",
 }
 android_packages = ("ai.comma.plus.offroad", "ai.comma.plus.frame")
 
