@@ -10,7 +10,7 @@ from selfdrive.can.packer import CANPacker
 
 class CarControllerParams():
   def __init__(self, car_fingerprint):
-    if car_fingerprint == CAR.VOLT:
+    if car_fingerprint in (CAR.VOLT, CAR.MALIBU, CAR.HOLDEN_ASTRA):
       self.STEER_MAX = 300
       self.STEER_STEP = 2              # how often we update the steer cmd
       self.STEER_DELTA_UP = 7          # ~0.75s time to peak torque (255/50hz/0.75s)
@@ -28,14 +28,14 @@ class CarControllerParams():
 
     # Takes case of "Service Adaptive Cruise" and "Service Front Camera"
     # dashboard messages.
-    #self.ADAS_KEEPALIVE_STEP = 100 no radar-JR
+    self.ADAS_KEEPALIVE_STEP = 100
     self.CAMERA_KEEPALIVE_STEP = 100
 
     # pedal lookups, only for Volt
     MAX_GAS = 3072              # Only a safety limit
     ZERO_GAS = 2048
     MAX_BRAKE = 350             # Should be around 3.5m/s^2, including regen
-    self.MAX_ACC_REGEN = 0  # 0-JR gen braking is slightly less powerful than max regen paddle
+    self.MAX_ACC_REGEN = 1404  # ACC Regen braking is slightly less powerful than max regen paddle
     self.GAS_LOOKUP_BP = [-0.25, 0., 0.5]
     self.GAS_LOOKUP_V = [self.MAX_ACC_REGEN, ZERO_GAS, MAX_GAS]
     self.BRAKE_LOOKUP_BP = [-1., -0.25]
@@ -104,7 +104,7 @@ class CarController(object):
       self.apply_steer_last = apply_steer
       idx = (frame / P.STEER_STEP) % 4
 
-      if self.car_fingerprint == CAR.VOLT:
+      if self.car_fingerprint in (CAR.VOLT, CAR.MALIBU, CAR.HOLDEN_ASTRA):
         can_sends.append(gmcan.create_steering_control(self.packer_pt,
           canbus.powertrain, apply_steer, idx, lkas_enabled))
       if self.car_fingerprint == CAR.CADILLAC_CT6:
@@ -113,7 +113,7 @@ class CarController(object):
 
     ### GAS/BRAKE ###
 
-    if self.car_fingerprint == CAR.VOLT:
+    if self.car_fingerprint in (CAR.VOLT, CAR.MALIBU, CAR.HOLDEN_ASTRA):
       # no output if not enabled, but keep sending keepalive messages
       # treat pedals as one
       final_pedal = actuators.gas - actuators.brake
