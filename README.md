@@ -1,6 +1,6 @@
 [![](https://i.imgur.com/UetIFyH.jpg)](#)
 
-Welcome to openpilot
+Welcome to JR's 2018 Chevrolet Equinox Premier port for openpilot
 ======
 
 [openpilot](http://github.com/commaai/openpilot) is an open source driving agent. Currently it performs the functions of Adaptive Cruise Control (ACC) and Lane Keeping Assist System (LKAS) for selected Honda, Toyota, Acura, Lexus, Chevrolet, Hyundai, Kia. It's about on par with Tesla Autopilot and GM Super Cruise, and better than [all other manufacturers](http://www.thedrive.com/tech/5707/the-war-for-autonomous-driving-part-iii-us-vs-germany-vs-japan).
@@ -48,6 +48,7 @@ Supported Cars
 | Acura                | RDX 2018              | AcuraWatch Plus      | Yes     | Yes            | 25mph<sup>1</sup>| 12mph          |
 | Chevrolet<sup>3</sup>| Volt 2017             | Adaptive Cruise      | Yes     | Yes            | 0mph             | 7mph           |
 | Chevrolet<sup>3</sup>| Volt 2018             | Adaptive Cruise      | Yes     | Yes            | 0mph             | 7mph           |
+| Chevrolet            | Equinox 2018          | Premier   WIP        | Yes     | No             | NA               | 34mph?         |
 | Honda                | Accord 2018           | All                  | Yes     | Stock          | 0mph             | 3mph           |
 | Honda                | Civic 2016            | Honda Sensing        | Yes     | Yes            | 0mph             | 12mph          |
 | Honda                | Civic 2017            | Honda Sensing        | Yes     | Yes            | 0mph             | 12mph          |
