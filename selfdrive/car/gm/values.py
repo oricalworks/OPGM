@@ -57,11 +57,10 @@ def parse_gear_shifter(can_gear):
     return car.CarState.GearShifter.unknown
 
 FINGERPRINTS = {
-  #2018 Chevrolet Equinox Premier No ACC
+  # Chevrolet 2018 Equinox Premier, ASCM unplugged. real fingerprint?
   CAR.EQUINOX: [{
-  #Equinox fingerprint
+   190: 6, 193: 8, 197: 8, 199: 4, 201: 8, 209 : 7, 211: 2, 241: 6, 249: 8, 288: 5, 289: 8, 298: 8, 304: 1, 309: 8, 311: 8, 313 : 8, 320: 3, 322: 7, 328: 1, 352: 5, 381: 8, 384: 4, 386: 8, 388: 8, 393: 8, 398 : 8, 413: 8, 417: 7, 419: 1, 422: 4, 426: 7, 431: 8, 442: 8, 444: 7, 451: 8, 452 : 8, 453: 6, 455: 7, 456: 8, 479: 3, 481: 7, 485: 8, 489: 8, 497: 8, 499: 3, 500 : 6, 501: 8, 508: 8, 510: 8, 528: 5, 532: 6, 554: 3, 560: 8, 562: 8, 563: 5, 564 : 5, 565: 5, 567: 5, 569: 3, 573: 1, 608: 8, 609: 6, 610: 6, 611: 6, 612: 8, 613 : 8, 707: 8, 717: 5, 753: 5, 761: 7, 800: 6, 810: 8, 840: 5, 842: 5, 844: 8, 866 : 4, 869: 4, 961: 8, 969: 8, 977: 8, 979: 8, 985: 5, 1001: 8, 1005: 6, 1009: 8, 1011: 6, 1017: 8, 1020: 8 , 1033: 7, 1034: 7, 1105: 6, 1217: 8, 1221: 5, 1225: 8, 1233: 8, 1249: 8, 1257: 6, 1259: 8, 1261: 7, 1263: 4, 1265: 8, 1267: 1, 1271: 8 , 1273: 3, 1280: 4, 1300: 8, 1322: 6, 1328: 4, 1417: 8, 1906: 7, 1907: 7, 1912: 7, 1919: 7, 1920: 7, 1930 : 7, 2016: 8, 2024: 8 
   }],
-  
   # Astra BK MY17, ASCM unplugged
   CAR.HOLDEN_ASTRA: [{
     190: 8, 193: 8, 197: 8, 199: 4, 201: 8, 209: 7, 211: 8, 241: 6, 249: 8, 288: 5, 298: 8, 304: 1, 309: 8, 311: 8, 313: 8, 320: 3, 328: 1, 352: 5, 381: 6, 386: 8, 388: 8, 393: 8, 398: 8, 401: 8, 413: 8, 417: 8, 419: 8, 422: 1, 426: 7, 431: 8, 442: 8, 451: 8, 452: 8, 453: 8, 455: 7, 456: 8, 458: 5, 479: 8, 481: 7, 485: 8, 489: 8, 497: 8, 499: 3, 500: 8, 501: 8, 508: 8, 528: 5, 532: 6, 554: 3, 560: 8, 562: 8, 563: 5, 564: 5, 565: 5, 567: 5, 647: 5, 707: 8, 723: 8, 753: 5, 761: 7, 806: 1, 810: 8, 840: 5, 842: 5, 844: 8, 866: 4, 961: 8, 969: 8, 977: 8, 979: 8, 985: 5, 1001: 8, 1009: 8, 1011: 6, 1017: 8, 1019: 3, 1020: 8, 1105: 6, 1217: 8, 1221: 5, 1225: 8, 1233: 8, 1249: 8, 1257: 6, 1259: 8, 1261: 7, 1263: 4, 1265: 8, 1267: 8, 1280: 4, 1300: 8, 1328: 4, 1417: 8, 1906: 7, 1907: 7, 1908: 7, 1912: 7, 1919: 7,
@@ -88,17 +87,17 @@ FINGERPRINTS = {
 STEER_THRESHOLD = 1.0
 
 STOCK_CONTROL_MSGS = {
+  CAR.EQUINOX: [384, 715],
   CAR.HOLDEN_ASTRA: [384, 715],
   CAR.VOLT: [384, 715], # 384 = "ASCMLKASteeringCmd", 715 = "ASCMGasRegenCmd"
   CAR.MALIBU: [384, 715], # 384 = "ASCMLKASteeringCmd", 715 = "ASCMGasRegenCmd"
   CAR.CADILLAC_CT6: [], # Cadillac does not require ASCMs to be disconnected
-  CAR.EQUINOX: [384, 715], #ASCM Optional? Find out
-  }
+}
 
 DBC = {
+  CAR.EQUINOX: dbc_dict('gm_global_a_powertrain', 'gm_global_a_object', chassis_dbc='gm_global_a_chassis'),
   CAR.HOLDEN_ASTRA: dbc_dict('gm_global_a_powertrain', 'gm_global_a_object', chassis_dbc='gm_global_a_chassis'),
   CAR.VOLT: dbc_dict('gm_global_a_powertrain', 'gm_global_a_object', chassis_dbc='gm_global_a_chassis'),
   CAR.MALIBU: dbc_dict('gm_global_a_powertrain', 'gm_global_a_object', chassis_dbc='gm_global_a_chassis'),
   CAR.CADILLAC_CT6: dbc_dict('cadillac_ct6_powertrain', 'cadillac_ct6_object', chassis_dbc='cadillac_ct6_chassis'),
-  CAR.EQUINOX: dbc_dict('gm_global_a_powertrain', 'gm_global_a_object', chassis_dbc='gm_global_a_chassis'), # DBC Config
 }

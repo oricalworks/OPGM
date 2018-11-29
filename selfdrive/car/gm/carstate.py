@@ -72,11 +72,6 @@ class CarState(object):
 
     self.can_valid = pt_cp.can_valid
     self.prev_cruise_buttons = self.cruise_buttons
-	
-	#Engage openpilot Equinox?
-	if car_fingerprint == (CAR.EQUINOX): # NO ACC, using ASCM Button
-	self.cruise_buttons = pt_cp.vl["ASCMSteeringButton"]['ASCMSteeringButton'] 
-	else 
     self.cruise_buttons = pt_cp.vl["ASCMSteeringButton"]['ACCButtons']
 
     self.v_wheel_fl = pt_cp.vl["EBCMWheelSpdFront"]['FLWheelSpd'] * CV.KPH_TO_MS
